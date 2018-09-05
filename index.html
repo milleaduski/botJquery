@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Bot Jquery</title>
+	<style type="text/css">
+		#terminal{
+			background: black;
+			color: white;
+			margin: 5% auto;
+			width: 80%;
+			padding: 7px;
+			overflow: hidden;
+		}
+		
+		#terminal .input{
+			width: 90%;
+			background: black;
+			border: none;
+			color: white;
+		}
+		#terminal .input:focus{
+			outline: none;
+		}
+	</style>
+</head>
+<body>
+	<div id="terminal">
+		<h3>//Welcome in my tutorial//<br>===================</h3>
+		<span>$bot : </span> <input class="input" type="" name="input" placeholder="_">
+	</div>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+  		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  		crossorigin="anonymous">		
+  	</script>
+  	<script type="text/javascript">
+  		$('#terminal').on('keyup', '.input',function(e){
+  			if(e.keyCode == 13){
+  				var value = $(this).val().trim().split(' ');
+  				if( value == ''){
+  					doResponse("Command not recognized")
+  				}else{
+  					if(value[0] == "open"){
+  						openLink(value[1])
+  					}
+  				}
+  				commandBot()
+  			}
+  		});
+  		function doResponse(msg){
+  			$('#terminal').append("<div class='res_bot'>"+ msg +"</div>")
+  		}
+  		function commandBot(){
+  			$('#terminal').append("<br><span>$bot : </span> <input class='input' name='input' placeholder='_'>")
+  		}
+  		function openLink(link){
+   			var newLink =  link.includes("https://");
+  			if(newLink){
+  				window.open(link, '_blank');
+  			}else{
+  				newLink = "https://"+link;
+  				window.open(newLink, '_blank');
+  			}
+  		}
+  	</script>
+</body>
+</html>
+
