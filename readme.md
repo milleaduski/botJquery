@@ -13,6 +13,3 @@ Create terminal bots to help us manage databases, general commands.
 * Install Jquery
 
 
-
-
-
