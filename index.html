@@ -41,12 +41,18 @@
   				}else{
   					if(value[0] == "open"){
   						openLink(value[1])
-  					}else if(value[0] == "db"){
-  						$.post("api/index.php", { command: value[0], table:value[1] },
+  					}else {
+  						$.post("api/index.php", { command: value[0], table:value[1], column:value[2] },
   							function(response){
-  								for (var i = 0; i < response.length; i++) {
-                    doResponse('The title is '+response[i].title+ "and description is "+ response[i].description);
+                  if(response.length ==0){
+                     doResponse('Column not found');
+                  }else{
+                    for (var i = 0; i < response.length; i++) {
+                      doResponse('title : '+response[i].title+' Description : '+ response[i].description);
+                    }  
                   }
+  								
+                  commandBot();
   						});
   					}
   				}
@@ -68,7 +74,13 @@
   				window.open(newLink, '_blank');
   			}
   		}
+
+      $('#terminal').keydown(function(e){
+        if(e.keyCode==38){
+          var data = $('.input').eq(-2).val();
+          $('.input').last().val(data);
+        }
+      });
   	</script>
 </body>
 </html>
-
