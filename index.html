@@ -37,50 +37,68 @@
   			if(e.keyCode == 13){
   				var value = $(this).val().trim().split(' ');
   				if( value == ''){
-  					doResponse("Command not recognized")
+  					_objectBot.doResponse("Command not recognized")
   				}else{
-  					if(value[0] == "open"){
+  					if_objectBot.(value[0] == "open"){
   						openLink(value[1])
   					}else {
   						$.post("api/index.php", { command: value[0], table:value[1], column:value[2] },
   							function(response){
                   if(response.length ==0){
-                     doResponse('Column not found');
+                     _objectBot.doResponse('Column not found');
                   }else{
                     for (var i = 0; i < response.length; i++) {
-                      doResponse('title : '+response[i].title+' Description : '+ response[i].description);
+                      _objectBot.doResponse('title : '+response[i].title+' Description : '+ response[i].description);
                     }  
                   }
-  								
-                  commandBot();
+                  _objectBot.commandBot();
   						});
   					}
   				}
   			
   			}
   		});
-  		function doResponse(msg){
-  			$('#terminal').append("<div class='res_bot'>"+ msg +"</div>")
-  		}
-  		function commandBot(){
-  			$('#terminal').append("<br><span>$bot : </span> <input class='input' name='input' placeholder='_'>")
-  		}
-  		function openLink(link){
-   			var newLink =  link.includes("https://");
-  			if(newLink){
-  				window.open(link, '_blank');
-  			}else{
-  				newLink = "https://"+link;
-  				window.open(newLink, '_blank');
-  			}
-  		}
+      var _objectBot ={
+          doResponse: function(msg){
+            $('#terminal').append("<div class='res_bot'>"+ msg +"</div>")
+          }
+          commandBot: function(){
+            $('#terminal').append("<br><span>$bot : </span> <input class='input' name='input' placeholder='_'>")
+          }
+          openLink: function(link){
+            var newLink =  link.includes("https://");
+            if(newLink){
+              window.open(link, '_blank');
+            }else{
+              newLink = "https://"+link;
+              window.open(newLink, '_blank');
+            }
+          } 
+      }
+  		
 
+      var index         = -2;
+      var indexChanged  = false; 
       $('#terminal').keydown(function(e){
+        //arrow up
         if(e.keyCode==38){
-          var data = $('.input').eq(-2).val();
+          console.log("arrow up pressed")
+          if (indexChanged == true) index--;
+          var data = $('.input').eq(index).val();
+          $('.input').last().val(data);
+          indexChanged = true;
+        }
+        //arrow down
+        if(e.keyCode==40){
+          console.log("arrow down pressed")
+          if (indexChanged == true) index++;
+          var data = $('.input').eq(index).val();
           $('.input').last().val(data);
         }
       });
+
+
   	</script>
 </body>
 </html>
+
